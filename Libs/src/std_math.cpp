@@ -1,0 +1,117 @@
+#include "std_math.hpp"
+#include "string.h"
+#include "math.h"
+
+
+///////////////////////////////////////////     VEC3        /////////////////////////////////////////////////////
+/*********      Byte_Vec3编码解码      **********/
+void Vec3::ToBytes(uint8_t* buffer)
+{
+    memcpy(buffer, &(this->x), sizeof(float));
+    memcpy(buffer + sizeof(float), &(this->y), sizeof(float));
+    memcpy(buffer + 2 * sizeof(float), &(this->z), sizeof(float));
+}
+void Vec3::FromBytes(const uint8_t* buffer)
+{
+    memcpy(&(this->x), buffer, sizeof(float));
+    memcpy(&(this->y), buffer + sizeof(float), sizeof(float));
+    memcpy(&(this->z), buffer + 2 * sizeof(float), sizeof(float));
+}
+
+
+/*********      Vec3归一化      **********/
+Vec3 Vec3::Norm() 
+{
+    Vec3 v = *this;
+    // 计算向量的模
+    float magnitude = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+
+    // 检查模是否为零，如果为零则返回零向量
+    if (magnitude == 0) {
+        Vec3 zero_vector = {0, 0, 0};
+        return zero_vector;
+    }
+
+    // 归一化向量
+    Vec3 normalized_vector;
+    normalized_vector.x = v.x / magnitude;
+    normalized_vector.y = v.y / magnitude;
+    normalized_vector.z = v.z / magnitude;
+    return normalized_vector;
+}
+
+/*********      Vec3长度      **********/
+float Vec3::Length() 
+{
+    // 计算向量的模
+    return sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
+}
+
+///////////////////////////////////////////          VEC2        /////////////////////////////////////////////////////
+/*********      Byte_Vec2编码解码      **********/
+void Vec2::ToBytes(uint8_t* buffer)
+{
+    memcpy(buffer, &(this->x), sizeof(float));
+    memcpy(buffer + sizeof(float), &(this->y), sizeof(float));
+}
+void Vec2::FromBytes(const uint8_t* buffer)
+{
+    memcpy(&(this->x), buffer, sizeof(float));
+    memcpy(&(this->y), buffer + sizeof(float), sizeof(float));
+}
+
+/*********      Vec2    归一化      **********/
+Vec2 Vec2::Norm() 
+{
+    Vec2 v = *this;
+    // 计算向量的模
+    float magnitude = sqrt(v.x * v.x + v.y * v.y);
+    // 检查模是否为零，如果为零则返回零向量
+    if (magnitude == 0) {
+        Vec2 zero_vector = {0, 0};
+        return zero_vector;
+    }
+    // 归一化向量
+    Vec2 normed_vec;
+    normed_vec.x = v.x / magnitude;
+    normed_vec.y = v.y / magnitude;
+
+    return normed_vec;
+}
+
+/*********      Vec2长度      **********/
+float Vec2::Length() 
+{
+    // 计算向量的模
+    return sqrt(this->x * this->x + this->y * this->y);
+}
+
+/*********      Vec2角度      **********/
+///@brief 计算弧度制（RAD）的角度值
+float Vec2::Angle() 
+{
+    // 使用atan2函数计算向量的角度，atan2返回值范围是[-π, π]
+    return atan2(this->y, this->x);
+}
+
+/*********      Vec2 旋转      **********/
+///@brief 计算弧度制（RAD）的角度值
+Vec2 Vec2::Rotate(float thetaRad)
+{
+    Vec2 result;
+    float cosTheta = cosf(thetaRad);
+    float sinTheta = sinf(thetaRad);
+    
+    // 旋转公式：x' = x*cosθ - y*sinθ, y' = x*sinθ + y*cosθ
+    result.x = this->x * cosTheta - this->y * sinTheta;
+    result.y = this->x * sinTheta + this->y * cosTheta;
+
+    return result;
+}
+
+/*********      Vec2转3      **********/
+Vec3 Vec2::ToVec3()
+{
+    Vec3 v(this->x, this->y, 0);
+    return v;
+}
