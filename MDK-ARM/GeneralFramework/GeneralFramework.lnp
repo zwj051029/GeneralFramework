@@ -47,12 +47,14 @@
 "generalframework\pids.o"
 "generalframework\maincpp.o"
 "generalframework\rtoscpp.o"
+"generalframework\robotsystem.o"
+"generalframework\statemachine.o"
+"generalframework\chassis.o"
 "generalframework\odo_ops.o"
 "generalframework\motor_dm.o"
 "generalframework\motor_dji.o"
 "generalframework\std_msg.o"
 "generalframework\led_ws2812.o"
-"generalframework\ws2812_yx.o"
 --strict --scatter "GeneralFramework\GeneralFramework.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

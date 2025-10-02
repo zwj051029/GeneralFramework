@@ -314,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>0</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -868,6 +868,21 @@
               <FileType>8</FileType>
               <FilePath>..\Apps\src\RtosCpp.cpp</FilePath>
             </File>
+            <File>
+              <FileName>RobotSystem.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Apps\src\RobotSystem.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>StateMachine.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Apps\src\StateMachine.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>Chassis.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Apps\src\Chassis.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -897,11 +912,6 @@
               <FileName>led_ws2812.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\Mods\src\led_ws2812.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>WS2812_yx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Libs\WS2812_yx.c</FilePath>
             </File>
           </Files>
         </Group>

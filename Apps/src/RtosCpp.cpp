@@ -3,6 +3,7 @@
 #include "freertos.h"
 #include "cmsis_os.h"
 #include "bsp_dwt.h"
+#include "motor_dji.hpp"
 
 
 /**
@@ -42,6 +43,7 @@ void FastControlCpp()
 {
     while (1)
     {
+        MotorDji::ControlAllMotors();
         osDelay(1);
     }
 }

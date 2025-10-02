@@ -7,6 +7,7 @@
 
 class Vec2;
 class Vec3;
+
 /**
  * @name 二维向量
  */
@@ -108,6 +109,44 @@ inline Vec3 operator/(const Vec3& vec, float scalar) {  // 向量数除
 }
 
 
+
+/**
+ * @name 三维向量
+ */
+class Color
+{
+    private:
+        /* data */
+    public:
+        float r, g, b;
+        // 构造函数的实现直接放在类定义中
+        Color(float r, float g, float b) : r(r), g(g), b(b) {}
+        Color() : r(0), g(0), b(0) {}
+        
+        // 友元函数重载运算符
+        friend Color operator+(const Color& lhs, const Color& rhs);
+        friend Color operator-(const Color& lhs, const Color& rhs);
+        friend Color operator*(const Color& vec, float scalar);
+        friend Color operator*(float scalar, const Color& vec);
+        friend Color operator/(const Color& vec, float scalar);
+};
+/*********      运算符重载      **********/
+inline Color operator+(const Color& lhs, const Color& rhs) {
+    return Color(lhs.r + rhs.r, lhs.g + rhs.g, lhs.b + rhs.b);
+}
+inline Color operator-(const Color& lhs, const Color& rhs) {
+    return Color(lhs.r - rhs.r, lhs.g - rhs.g, lhs.b - rhs.b);
+}
+inline Color operator*(const Color& vec, float scalar) {  // 向量数乘（向量在前）
+    return Color(vec.r * scalar, vec.g * scalar, vec.b * scalar);
+}
+inline Color operator*(float scalar, const Color& vec) {  // 向量数乘（标量在前）
+    return Color(vec.r * scalar, vec.g * scalar, vec.b * scalar);
+}
+inline Color operator/(const Color& vec, float scalar) {  // 向量数除
+    assert(scalar != 0); // 避免除以零
+    return Color(vec.r / scalar, vec.g / scalar, vec.b / scalar);
+}
 
 
 typedef struct {

@@ -5,6 +5,7 @@
 #ifndef _LED_WS2812_HPP_
 #define _LED_WS2812_HPP_ 
 #include "stm32f4xx_hal.h"
+#include "std_math.hpp"
 
 class LedWs2812
 {
@@ -12,8 +13,8 @@ private:
     uint32_t PwmMaxValue;        // PWM最大值
     uint32_t HIGH_WS2812 = 0;   // PWM高电平数值
     uint32_t LOW_WS2812 = 0;    // PWM低电平数值
-
-    
+    uint32_t dwt_tick;
+    float RuntimeCnt = 0;
     
     
 public:
@@ -26,6 +27,8 @@ public:
     void SetColor(int8_t Led_id, uint8_t R, uint8_t G, uint8_t B);
     void SendData();
     void Init(TIM_HandleTypeDef *htim, uint32_t Channel, uint8_t LedNums);
+    void GradientFlow(Color color_0, Color color_1, float period);
+    void Fill(uint8_t R, uint8_t G, uint8_t B);
     void Update();
 };
 

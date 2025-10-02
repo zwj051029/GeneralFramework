@@ -42,6 +42,7 @@ typedef enum
 	None_Control
 }MotorDJIMode;
 
+
 /// @brief 电机类：C620 / C610
 class MotorDji
 {
