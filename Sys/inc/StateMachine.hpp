@@ -26,10 +26,11 @@ typedef struct
 class StateBlocks
 {
     public:
-    StateBlocks(char *name, void (*StateAction)(StateCore *core))
+    StateBlocks(){};
+    StateBlocks(const char *name, void (*StateAction)(StateCore *core))
     {
         strncpy(this->name, name, 15);
-        name[15] = 0; // 确保字符串结尾
+        this->name[15] = 0; // 确保字符串结尾
         this->StateAction = StateAction;
         linkNums = 0;
     };
@@ -39,9 +40,13 @@ class StateBlocks
     StateLink links[16];                 // 状态链接
     uint8_t linkNums;                   // 状态链接数量
 
+    bool Complete;                      // 运行完成标志
+    StateBlocks* incore;          // 对应在状态机内部的那个同位StateCore
+
     void AddLink(bool *condition, StateBlocks *nextState);
     uint8_t Transition();
 };
+
 
 /**
  * @brief 状态机核心，即状态机本体
@@ -49,6 +54,8 @@ class StateBlocks
 class StateCore
 {
     public:
+    StateCore(){};
+
     uint32_t dwt_tick;          // dwt计时器用句柄
     float dt;                   // 两次状态切换的时间间隔，单位秒
     StateBlocks states[24];     // 状态块数组（上限24个）
@@ -58,7 +65,7 @@ class StateCore
     void (*GlobalAction)(StateCore *core) = nullptr;          // 全局状态函数
     
     void CoreGraph(BspUart_Instance uart_inst);
-    void AddState(StateBlocks state);
+    void AddState(StateBlocks *state);
     void Run(void);
 };
 
