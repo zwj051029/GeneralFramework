@@ -1,23 +1,23 @@
-#ifndef MSGCENTER_HPP
-#define MSGCENTER_HPP
+#ifndef EVTCENTER_HPP
+#define EVTCENTER_HPP
 
 #include "RobotSystem.hpp"
 
 
 /*****      系统状态变量        *****/
-class CenterStatusParam
+class EventStatusParam
 {
     public:
-    CenterStatusParam(){};
+    EventStatusParam(){};
     bool RoboReady;            // 机器人准备就绪
 };
 
 
 /*****      系统控制变量        *****/
-class CenterControlParam
+class EventControlParam
 {
     public:
-    CenterControlParam(){};
+    EventControlParam(){};
     bool StopRobot;
 };
 
@@ -29,6 +29,6 @@ class CenterControlParam
 
 
 /***    全局实例    ***/
-extern CenterControlParam ControlParam;
-extern CenterStatusParam StatusParam;
+extern EventControlParam EvtCParam;
+extern EventStatusParam EvtSParam;
 #endif
