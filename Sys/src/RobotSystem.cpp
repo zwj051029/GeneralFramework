@@ -1,11 +1,13 @@
 #include "RobotSystem.hpp"
 #include "bsp_dwt.h"
+#include "msg_coder.hpp" 
 
 RobotSystem System;
 
 void RobotSystem::Init(bool Sc)
 {
     DWT_Init(CPU_HERT_A_BOARD_MHZ);  // 初始化DWT计时器
+    
     // 设置自检
     // SetSelfcheck(Sc);
 }

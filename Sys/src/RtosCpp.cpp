@@ -5,13 +5,14 @@
 #include "bsp_dwt.h"
 #include "motor_dji.hpp"
 #include "RobotSystem.hpp"
-#include "Process.hpp"
+#include "StateCenter.hpp"
 #include "Test.hpp"
+#include "Action.hpp"
 
 
 /**
  * @brief   机器人主要的应用层任务
- * @note    负载 `极低`，以10Hz运行
+ * @note    负载 `极低`，以20Hz运行
  */
 void RobotMainCpp()   
 {
@@ -21,7 +22,9 @@ void RobotMainCpp()
     {   
         // 维护DWT计时器
         DWT_CntUpdate();
-        osDelayUntil(&AppTick, 100);    // 10Hz
+
+        /***    最大循环频率：20Hz     ***/
+        osDelayUntil(&AppTick, 50);    // 20Hz
     }
     
 }
@@ -40,7 +43,10 @@ void RobotSystemCpp()
     while (1)
     {
         System.Run();
-        osDelayUntil(&AppTick, 5);    // 200Hz
+        Action.ExecutorRun();          // 持续 追踪/执行 抛出的动作
+
+        /***    最大循环频率：200Hz     ***/
+        osDelayUntil(&AppTick, 5);
     }
 }
 
@@ -57,7 +63,9 @@ void SlowControlCpp()
 
     while (1)
     {
-        osDelayUntil(&AppTick, 5);    // 200Hz
+
+        /***    最大循环频率：200Hz     ***/
+        osDelayUntil(&AppTick, 5);
     }
 }
 
@@ -73,6 +81,8 @@ void FastControlCpp()
     while (1)
     {
         MotorDji::ControlAllMotors();
+
+        /***    最大循环频率：1000Hz     ***/
         osDelay(1);     // FreeRTOS的极限，1ms喂狗
     }
 }
@@ -111,6 +121,6 @@ void TestCpp()
 void PreMainCpp()
 {
     TestPart_MainInit();
-    Process.Init();
+    StateCenter.Regist();
     System.Init();
 }

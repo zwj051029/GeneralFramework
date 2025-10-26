@@ -869,19 +869,19 @@
               <FilePath>..\Apps\src\Test.cpp</FilePath>
             </File>
             <File>
-              <FileName>Process.cpp</FileName>
+              <FileName>EventCenter.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\Apps\src\Process.cpp</FilePath>
+              <FilePath>..\Apps\src\EventCenter.cpp</FilePath>
             </File>
             <File>
-              <FileName>MsgCenter.cpp</FileName>
+              <FileName>StateCenter.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\Apps\src\MsgCenter.cpp</FilePath>
+              <FilePath>..\Apps\src\StateCenter.cpp</FilePath>
             </File>
             <File>
-              <FileName>Robot_1_Arm.cpp</FileName>
+              <FileName>Action.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\Apps\src\Robot_1_Arm.cpp</FilePath>
+              <FilePath>..\Apps\src\Action.cpp</FilePath>
             </File>
           </Files>
         </Group>

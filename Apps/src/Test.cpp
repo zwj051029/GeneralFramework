@@ -7,7 +7,6 @@
 #include "odo_ops.hpp"
 #include "led_ws2812.hpp"
 #include "bsp_dwt.h"
-#include "Robot_1_Arm.hpp"
 
 bool TestEnable = true;
 
