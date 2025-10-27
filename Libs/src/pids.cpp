@@ -2,7 +2,7 @@
 
 #include "pids.hpp"
 #include "bsp_dwt.h"
-#include "math.h"
+#include "arm_math.h"
 
 float limit_ab(float a, float limit)
 {

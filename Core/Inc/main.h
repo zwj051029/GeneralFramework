@@ -31,6 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "arm_math.h"
 extern uint8_t rxfucks[32];
 /* USER CODE END Includes */
 

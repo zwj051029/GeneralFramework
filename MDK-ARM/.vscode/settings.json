@@ -16,6 +16,7 @@
         "gpio.h": "c",
         "task.h": "c",
         "__config": "cpp",
-        "__nullptr": "cpp"
+        "__nullptr": "cpp",
+        "arm_math.h": "c"
     }
 }
