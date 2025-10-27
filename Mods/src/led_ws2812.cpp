@@ -1,5 +1,5 @@
 #include "led_ws2812.hpp"
-#include "math.h"
+#include "arm_math.h"
 #include "bsp_dwt.h"
 
 #define MaxLedNums 16

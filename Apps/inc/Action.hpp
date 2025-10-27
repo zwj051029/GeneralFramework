@@ -8,7 +8,7 @@
 #define SEQLIZE                                            \
     static uint16_t case_id = 0;                           \
     static bool blocked = false;                           \
-    static BaseAction *p_act_0, p_act_1, p_act_2, p_act_3; \
+    static BaseAction *p_act_0, *p_act_1, *p_act_2, *p_act_3;   \
     static uint32_t seq_tick = 0;                          \
     switch (case_id)
 
@@ -17,12 +17,16 @@
     blocked ? 0 : case_id++; \
     blocked = false;         \
     break;
-#define SEQEND   \
-    case_id = 0; \
+#define SEQEND(x)   \
+    case_id = 0;    \
+    x = true;       \
     ACTEND
 #define SEQPARAM &blocked, &seq_tick
 
 class BaseAction; // 前向声明
+class ActionManager;
+extern ActionManager Action;
+
 
 class ActionManager
 {
@@ -63,7 +67,7 @@ public:
      * @brief 普通的非阻塞式等待
      * @param ms 等待时间，单位毫秒
      */
-    void Wait(uint32_t ms, bool *blocked = nullptr, uint32_t *seq_tick);
+    void Wait(uint32_t ms, bool *blocked = nullptr, uint32_t *seq_tick = nullptr);
 
     /**
      * @brief 等待直到
@@ -71,11 +75,12 @@ public:
      * @param blocked 阻塞序列用的
      * @param timeout_ms 超时
      */
-    void WaitUntil(bool condition, bool *blocked = nullptr, uint32_t *seq_tick, uint32_t timeout_ms = 180000);
+    void WaitUntil(bool condition, bool *blocked = nullptr, uint32_t *seq_tick = nullptr, uint32_t timeout_ms = 180000);
 
     BaseAction *RunningActions[12];        // 当前正在运行的动作列表
     bool RunningActionFlags[12] = {false}; // 哪些动作槽位被占用
 };
+
 
 /// @brief 动作基类
 class BaseAction
@@ -96,10 +101,11 @@ public:
     // 获取状态（通用接口）
     ActionManager::ActStauts GetState() const { return state; }
     bool Completed() const { return state == Action.COMPLETED; }
-    virtual bool Qualified() {}; // 不算完成，但达成了某种条件
+    // 不算完成，但达成了某种条件
+    virtual bool Qualified() {return true;};
 
     // 具体更新逻辑
-    virtual bool OnUpdate() {};
+    virtual bool OnUpdate() {return true;};
 
     // 子类可重写，完成、超时、取消的处理
     virtual void OnComplete() {}
@@ -113,6 +119,6 @@ protected:
     uint32_t dwt_tick;
 };
 
-extern ActionManager Action;
+
 
 #endif

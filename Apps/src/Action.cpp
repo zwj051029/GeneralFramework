@@ -1,7 +1,9 @@
 #include "Action.hpp"
 #include "bsp_dwt.h"
+// 全局唯一管理器变量
+ActionManager Action;
 
-void BaseAction::Start(uint32_t timeout = 0)
+void BaseAction::Start(uint32_t timeout)
 {
     state = Action.RUNNING;
     timeout_ms = timeout;
@@ -18,15 +20,15 @@ void BaseAction::Update()
     if (timeout_ms > 0 && (DWT_GetTimeline_MSec() - dwt_tick) > timeout_ms)
     {
         state = Action.FAILED;          // 判定任务超时失败
-        OnTimeout();                    // 调用子类的超时处理（可选实现）
+        OnTimeout();                    // 调用子类的超时
         return;                         // 结束返回
     }
 
-    // 调用子类的具体更新逻辑（纯虚函数，必须实现）
+    // 调用子类的具体更新逻辑
     if (OnUpdate())
     {
         state = Action.COMPLETED;
-        OnComplete();           // 调用子类的完成处理（可选实现）
+        OnComplete();           // 调用子类的完成
     }
 }
 
@@ -34,7 +36,7 @@ void BaseAction::Cancel()
 {
     if (state == Action.RUNNING) {
         state = Action.CANCELED;
-        OnCancel();             // 调用子类的取消处理（可选实现）
+        OnCancel();             // 调用子类的取消
     }
 }
 
@@ -42,7 +44,7 @@ void BaseAction::Cancel()
  * @brief 普通的非阻塞式等待
  * @param ms 等待时间，单位毫秒
  */
-void ActionManager::Wait(uint32_t ms, bool* blocked = nullptr, uint32_t* seq_tick)
+void ActionManager::Wait(uint32_t ms, bool* blocked, uint32_t* seq_tick)
 {
     // 记录起始时间
     if (*seq_tick == 0)     *seq_tick = DWT_GetTimeline_MSec();

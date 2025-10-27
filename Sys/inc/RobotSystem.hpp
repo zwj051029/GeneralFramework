@@ -8,6 +8,8 @@
 #include "motor_dm.hpp"
 #include "bsp_dwt.h"
 #include "StateMachine.hpp"
+#include "arm_math.h"
+#include "std_math.hpp"
 
 typedef struct
 {
@@ -50,7 +52,9 @@ class RobotSystem
     RobotDeviceStatus_t DeviceStatus;
     
     LedWs2812* Led = nullptr;
-    Odometer_Ops9* Odo = nullptr;      // 里程计指针
+    Odometer_Ops9* Odo = nullptr;      // 物理里程计
+
+    Vec3 global_position;           // 机器人全局位置，单位m，场地坐标系
 
     StateCore Automatic_Core;       // 自动状态机核心
     StateCore Controlled_Core;      // 受控状态机核心

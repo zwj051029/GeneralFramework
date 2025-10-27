@@ -16,6 +16,7 @@ void RoboIdle(StateCore *core);
 void RoboError(StateCore *core);
 void RoboStop(StateCore *core);
 void RoboArea1(StateCore *core);
+bool Area1Flag;
 
 /**
  * @brief 进程模块的初始化部分
@@ -59,6 +60,14 @@ void RoboArea1(StateCore *core)
 }
 
 
+
+
+
+
+
+
+
+
 void RoboIdle(StateCore *core)
 {
 
@@ -66,7 +75,7 @@ void RoboIdle(StateCore *core)
 
 void RoboError(StateCore *core)
 {
-
+    
 }
 
 void RoboStop(StateCore *core)
