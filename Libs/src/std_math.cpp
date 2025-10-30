@@ -47,6 +47,15 @@ float Vec3::Length()
     return sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
 }
 
+/**********      Vec3转2      *********/
+Vec2 Vec3::ToVec2()
+{
+    Vec2 v(this->x, this->y);
+    return v;
+}
+
+
+
 ///////////////////////////////////////////          VEC2        /////////////////////////////////////////////////////
 /*********      Byte_Vec2编码解码      **********/
 void Vec2::ToBytes(uint8_t* buffer)

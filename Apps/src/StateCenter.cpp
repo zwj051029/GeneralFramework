@@ -56,16 +56,19 @@ void RoboArea1(StateCore *core)
 {
     SEQLIZE
     {
+        // case 0:
+        // p_act_0 = Action.LaunchInstant(Arm.FetchBlock());
+        // p_act_1 = Action.LaunchAsync(Chassis.MoveAt(Vec2(2.0f, 2.0f));
+        // ACTEND
+        
+        // case 1:
+        // Action.WaitUntil(p_act_0->Completed() && p_act_1->Completed());
+        // ACTEND
+
+        // case 2:
+        // SEQEND;
     }
 }
-
-
-
-
-
-
-
-
 
 
 void RoboIdle(StateCore *core)

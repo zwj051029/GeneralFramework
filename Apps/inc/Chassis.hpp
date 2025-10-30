@@ -6,6 +6,7 @@
 #include "std_math.hpp"
 #include "motor_dji.hpp"
 
+
 class MoveAct;
 class ChassisClass;
 
@@ -106,7 +107,7 @@ class ChassisClass
         BaseAction* MoveAt(Vec2 Pos, float MaxVelo, float MaxAccel);
         
         /// @brief 沿路径移动
-        void MoveAlong(Path path_t);
+        BaseAction* MoveAlong(Path path_t);
 };
 
 extern ChassisClass Chassis;

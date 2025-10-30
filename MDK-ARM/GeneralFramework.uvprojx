@@ -934,9 +934,9 @@
               <FilePath>..\Sys\src\RtosCpp.cpp</FilePath>
             </File>
             <File>
-              <FileName>StateMachine.cpp</FileName>
+              <FileName>StateCore.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\Sys\src\StateMachine.cpp</FilePath>
+              <FilePath>..\Sys\src\StateCore.cpp</FilePath>
             </File>
           </Files>
         </Group>

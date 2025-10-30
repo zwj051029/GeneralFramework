@@ -7,7 +7,7 @@
 #include "motor_dji.hpp"
 #include "motor_dm.hpp"
 #include "bsp_dwt.h"
-#include "StateMachine.hpp"
+#include "StateCore.hpp"
 #include "arm_math.h"
 #include "std_math.hpp"
 
