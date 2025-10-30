@@ -17,10 +17,15 @@
     blocked ? 0 : case_id++; \
     blocked = false;         \
     break;
+
+/// @brief 序列化结束分割符
 #define SEQEND(x)   \
     case_id = 0;    \
     x = true;       \
     ACTEND
+#define SEQEND   \
+    ACTEND
+
 #define SEQPARAM &blocked, &seq_tick
 
 class BaseAction; // 前向声明

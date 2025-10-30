@@ -1,5 +1,7 @@
 #include "Chassis.hpp"
 #include "arm_math.h"
+#include "RobotSystem.hpp"
+
 // 唯一全局实例
 ChassisClass Chassis;
 
@@ -10,6 +12,16 @@ void ChassisClass::Init(MotorDji* m1, MotorDji* m2, MotorDji* m3, MotorDji* m4, 
     Motors[2] = m3;
     Motors[3] = m4;
     type = t;
+}
+
+void ChassisClass::Move(Vec3 Spd)
+{
+
+}
+
+void ChassisClass::Move(Vec2 Spd)
+{
+    
 }
 
 BaseAction* ChassisClass::MoveAt(Vec2 Pos)
@@ -41,6 +53,12 @@ BaseAction* ChassisClass::MoveAt(Vec2 Pos, float maxVelo, float maxAccel)
 
     return &move_action;
 }
+
+BaseAction* ChassisClass::MoveAlong(Path path_t)
+{
+    return nullptr;
+}
+
 
 void MoveAct::Reset(Vec2 new_target)
 {
@@ -112,4 +130,11 @@ bool MoveAct::MoveAt()
     Chassis.Move(new_speed_vec);
 		
     return false;
+}
+
+
+
+bool MoveAct::MoveAlong()
+{
+    return true;
 }
