@@ -17,7 +17,8 @@ void RobotSystem::Run()
     // 运行目标状态机
     Automatic_Core.Run();
 
-    // 监控内部注册模块
+    // 管理底盘
+    chassis->Update();
 
     // 管理 主灯带 状态
     

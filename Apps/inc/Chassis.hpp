@@ -7,6 +7,14 @@
 #include "motor_dji.hpp"
 
 
+#define ROTATE_RADIUS 0.29185f
+
+
+
+
+
+
+
 class MoveAct;
 class ChassisClass;
 
@@ -62,6 +70,7 @@ class ChassisClass
         float Accel = 0.0f;         // 最大加速度，单位m/s^2
         bool EnVeloLim;             // 是否启用速度限制
         float VeloLim = 0.0f;       // 最大线速度，单位m/s
+        float motor_spd[4];         // 四个电机的目标速度，单位m/s
 
         // 动作类
         MoveAct move_action;
@@ -76,7 +85,6 @@ class ChassisClass
             Meca,       // 麦克纳姆轮
             Steer,      // 舵轮
         }ChassisType;
-
         
         // 底盘类型，默认为全向轮
         ChassisType type = Omni;
@@ -85,14 +93,18 @@ class ChassisClass
         MotorDji *Motors[4] = {nullptr, nullptr, nullptr, nullptr};
 
         // 属性参数
-        Vec3 Speed;     // 期望速度，车体右手系，x向前，y向左，z左转，单位m/s，rad/s
-        float Velo;     // 对应的线速度，单位m/s
+        Vec3 speed;     // 期望速度，车体右手系，x向前，y向左，z左转，单位m/s，rad/s
+        float velo;     // 对应的线速度，单位m/s
+        bool enabled = false;    // 底盘使能标志
 
         float move_precision = 0.05f; // 最小移动精度，单位m
         float rotate_precision = 0.02f; // 最小旋转精度，单位rad    （0.017453 rad / 度）
 
         void Init(MotorDji* m1, MotorDji* m2, MotorDji* m3, MotorDji* m4, ChassisType t = Omni);
         void Config();
+        
+        /// @brief 底盘的周期维护函数，200Hz调用一次（被耦合在RobotSystem中）
+        void Update();
 
         /// @brief 直接设置底盘速度（一个通用的开环行为）
         void Move(Vec3 Spd);

@@ -2,6 +2,9 @@
 #include "arm_math.h"
 #include "RobotSystem.hpp"
 
+
+
+
 // 唯一全局实例
 ChassisClass Chassis;
 
@@ -14,12 +17,51 @@ void ChassisClass::Init(MotorDji* m1, MotorDji* m2, MotorDji* m3, MotorDji* m4, 
     type = t;
 }
 
+void ChassisClass::Update()
+{
+    // 仅当底盘使能时才工作
+    if (enabled)
+    {
+        // 发送速度指令到电机
+        for (int i = 0; i < 4; i++)
+        {
+            if (Motors[i] != nullptr)
+            {
+                // 
+                Motors[i]->SetSpeed(motor_spd[i] * 60.0f / (BSP_PI * WHEEL_DIAMETER));
+            }
+    }
+    
+}
+
+
+/**
+ * @brief 直接设置底盘速度（一个通用的开环行为）
+ * @param Spd 期望速度：（x: 前向速度，y：左向速度，w：逆时针）（m/s，m/s，rad/s）
+ * @note 轮序：     
+ *                      前
+ *                  0       1
+ *                  
+ * 
+ *                  2       3
+ */
 void ChassisClass::Move(Vec3 Spd)
 {
+    // 计算x, y, w合成分量
+    motor_spd[0] = (Spd.x - Spd.y) / (2 * BSP_SQRT2) - Spd.z * ROTATE_RADIUS;
+    motor_spd[1] = (-Spd.x - Spd.y) / (2 * BSP_SQRT2) + Spd.z * ROTATE_RADIUS;
+    motor_spd[2] = (Spd.x + Spd.y) / (2 * BSP_SQRT2) - Spd.z * ROTATE_RADIUS;
+    motor_spd[3] = (-Spd.x + Spd.y) / (2 * BSP_SQRT2) + Spd.z * ROTATE_RADIUS;
 
+    
 }
 
 void ChassisClass::Move(Vec2 Spd)
+{
+    
+}
+
+void ChassisClass::Rotate(float omega)
 {
     
 }
@@ -113,7 +155,7 @@ bool MoveAct::MoveAt()
 
     // 更新底盘速度（向量式更新，保证更新量不大于MaxAccel）
     Vec2 targ_speed_vec = move_vec.Norm() * final_velo;     // 计算新的目标速度
-    Vec2 curr_speed_vec = Chassis.Speed.ToVec2();           // 当前速度
+    Vec2 curr_speed_vec = Chassis.speed.ToVec2();           // 当前速度
     
     // 计算速度差
     Vec2 delta_speed_vec = targ_speed_vec - curr_speed_vec;
