@@ -8,13 +8,20 @@
 // 唯一全局实例
 ChassisClass Chassis;
 
-void ChassisClass::Init(MotorDji* m1, MotorDji* m2, MotorDji* m3, MotorDji* m4, ChassisType t)
+void ChassisClass::Init()
 {
-    Motors[0] = m1;
-    Motors[1] = m2;
-    Motors[2] = m3;
-    Motors[3] = m4;
-    type = t;
+    // 初始化电机
+    MotorDji motors[4] = {MotorDji(), MotorDji(), MotorDji(), MotorDji()};
+
+    for (int i = 0; i < 4; i++)
+    {
+        motors[i].Init(&hcan1, i + 1, MotorDJIMode::Speed_Control, true);
+    }
+}
+
+void ChassisClass::Enable()
+{
+    enabled = true;
 }
 
 void ChassisClass::Update()
@@ -22,16 +29,26 @@ void ChassisClass::Update()
     // 仅当底盘使能时才工作
     if (enabled)
     {
+        // 计算x, y, w合成分量
+        motor_spd[0] = (speed.x - speed.y)  / (2 * BSP_SQRT2) - speed.z * ROTATE_RADIUS;
+        motor_spd[1] = (-speed.x - speed.y) / (2 * BSP_SQRT2) + speed.z * ROTATE_RADIUS;
+        motor_spd[2] = (speed.x + speed.y)  / (2 * BSP_SQRT2) - speed.z * ROTATE_RADIUS;
+        motor_spd[3] = (-speed.x + speed.y) / (2 * BSP_SQRT2) + speed.z * ROTATE_RADIUS;
+
         // 发送速度指令到电机
         for (int i = 0; i < 4; i++)
         {
-            if (Motors[i] != nullptr)
-            {
-                // 
-                Motors[i]->SetSpeed(motor_spd[i] * 60.0f / (BSP_PI * WHEEL_DIAMETER));
-            }
+            motors[i].SetSpeed(motor_spd[i] * 60.0f / (PI * WHEEL_DIAMETER));
+        }
     }
-    
+    else
+    {
+        // 底盘未使能，发送 0 电流（空档）
+        for (int i = 0; i < 4; i++)
+        {
+            motors[i].Neutral();
+        }
+    }
 }
 
 
@@ -44,26 +61,24 @@ void ChassisClass::Update()
  *                  
  * 
  *                  2       3
+ * @warning 每次设置速度都会刷新安全锁，需要持续调用以保持底盘运动。
+ * 在指令中断100ms后，底盘会自动进入空档（0电流）状态。
+ * （100ms已经很长了，相当于20个指令周期都没有指令输入）
  */
 void ChassisClass::Move(Vec3 Spd)
 {
-    // 计算x, y, w合成分量
-    motor_spd[0] = (Spd.x - Spd.y) / (2 * BSP_SQRT2) - Spd.z * ROTATE_RADIUS;
-    motor_spd[1] = (-Spd.x - Spd.y) / (2 * BSP_SQRT2) + Spd.z * ROTATE_RADIUS;
-    motor_spd[2] = (Spd.x + Spd.y) / (2 * BSP_SQRT2) - Spd.z * ROTATE_RADIUS;
-    motor_spd[3] = (-Spd.x + Spd.y) / (2 * BSP_SQRT2) + Spd.z * ROTATE_RADIUS;
-
-    
+    speed = Spd;
 }
 
 void ChassisClass::Move(Vec2 Spd)
 {
-    
+    speed.x = Spd.x;
+    speed.y = Spd.y;
 }
 
 void ChassisClass::Rotate(float omega)
 {
-    
+    speed.z = omega;
 }
 
 BaseAction* ChassisClass::MoveAt(Vec2 Pos)
@@ -114,7 +129,7 @@ void MoveAct::Reset(Vec2 new_target)
  * @brief 移动动作的更新函数
  * @note 动作被抛出后，这玩意会以200Hz被循环调用直到动作完成
  */
-bool MoveAct::OnUpdate()
+bool MoveAct::OnUpdate() 
 {
     // 这里实现移动到target_pos的逻辑
     if (movetype == AtPos)

@@ -1,6 +1,7 @@
 #include "RobotSystem.hpp"
 #include "bsp_dwt.h"
 #include "msg_coder.hpp" 
+#include "Chassis.hpp"
 
 RobotSystem System;
 
@@ -10,6 +11,9 @@ void RobotSystem::Init(bool Sc)
     
     // 设置自检
     // SetSelfcheck(Sc);
+    
+    // 初始化底盘
+    Chassis.Init();
 }
 
 void RobotSystem::Run()
@@ -18,7 +22,7 @@ void RobotSystem::Run()
     Automatic_Core.Run();
 
     // 管理底盘
-    chassis->Update();
+    Chassis.Update();
 
     // 管理 主灯带 状态
     

@@ -6,14 +6,8 @@
 #include "std_math.hpp"
 #include "motor_dji.hpp"
 
-
 #define ROTATE_RADIUS 0.29185f
-
-
-
-
-
-
+#define WHEEL_DIAMETER 0.16f
 
 class MoveAct;
 class ChassisClass;
@@ -90,7 +84,7 @@ class ChassisClass
         ChassisType type = Omni;
 
         // 分别对应四个底盘电机
-        MotorDji *Motors[4] = {nullptr, nullptr, nullptr, nullptr};
+        MotorDji motors[4];
 
         // 属性参数
         Vec3 speed;     // 期望速度，车体右手系，x向前，y向左，z左转，单位m/s，rad/s
@@ -100,8 +94,9 @@ class ChassisClass
         float move_precision = 0.05f; // 最小移动精度，单位m
         float rotate_precision = 0.02f; // 最小旋转精度，单位rad    （0.017453 rad / 度）
 
-        void Init(MotorDji* m1, MotorDji* m2, MotorDji* m3, MotorDji* m4, ChassisType t = Omni);
+        void Init();
         void Config();
+        void Enable();
         
         /// @brief 底盘的周期维护函数，200Hz调用一次（被耦合在RobotSystem中）
         void Update();

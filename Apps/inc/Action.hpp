@@ -1,8 +1,7 @@
 #ifndef ACTION_HPP
 #define ACTION_HPP
 
-#include "RobotSystem.hpp"
-#include "Action.hpp"
+#include "stm32f4xx_hal.h"
 
 /// @brief 序列化宏定义，在某个状态函数中实现序列动作
 #define SEQLIZE                                            \
@@ -19,12 +18,12 @@
     break;
 
 /// @brief 序列化结束分割符
-#define SEQEND(x)   \
+#define SEQENDTO(x)   \
     case_id = 0;    \
     x = true;       \
     ACTEND
-#define SEQEND   \
-    ACTEND
+
+#define SEQEND ACTEND
 
 #define SEQPARAM &blocked, &seq_tick
 
