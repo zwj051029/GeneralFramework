@@ -4,11 +4,6 @@
 #include "Action.hpp"
 #include "Chassis.hpp"
 
-#define PASTE2(a,b) a##b
-#define NEW_STATE(core, name) \
-    StateBlocks PASTE2(St_, name)(#name, PASTE2(Robo, name)); \
-    core.AddState(&PASTE2(St_, name));
-
 RobotStateCenter StateCenter;
 
 void RoboInit(StateCore *core);
