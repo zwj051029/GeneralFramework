@@ -64,10 +64,10 @@ void MotorDji::SwitchMode(MotorDJIMode new_mode)
 
 /// @brief 设置速度
 /// @param rpm 
-void MotorDji::SetSpeed(float rpm)
+void MotorDji::SetSpeed(float rpm, float redu_ratio)
 {
 	if (mode != Speed_Control) return; 	// 不是速度模式就不执行
-	targ_speed = rpm;
+	targ_speed = rpm * redu_ratio;				// 3508电机的减速比为 19:1
 }
 
 /// @brief 设置位置
