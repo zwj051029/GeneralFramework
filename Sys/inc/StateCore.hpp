@@ -73,6 +73,7 @@ class StateCore
     void Degenerate(void);                                  // 进入状态机简并运行模式
     void (*GlobalAction)(StateCore *core) = nullptr;          // 全局状态函数
     
+    void RegistGlobalAction(void (*GlobalAction)(StateCore *core));
     void CoreGraph(BspUart_Instance uart_inst);
     void AddState(StateBlocks *state);
     void Run(void);
