@@ -63,7 +63,7 @@ public:
 	/** 	  方法		**/
 	void Init(CAN_HandleTypeDef *hcan, uint8_t motorESC_id, MotorDJIMode djimode, bool fastInit = true);
 	void SwitchMode(MotorDJIMode new_mode);
-	void SetSpeed(float rpm);
+	void SetSpeed(float rpm, float redu_ratio = 19.0f);		// 3508的默认减速比（用2006的时候记得改！）
 	void SetPos(float pos);
 	void Disable();
 	void Enable();
