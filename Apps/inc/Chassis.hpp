@@ -94,26 +94,28 @@ class ChassisClass
         float move_precision = 0.05f; // 最小移动精度，单位m
         float rotate_precision = 0.02f; // 最小旋转精度，单位rad    （0.017453 rad / 度）
 
-        void Init();
-        void Config();
-        void Enable();
-        void Disable(); 
-        
+        /**         构建接口    (Build)        **/
+        void Build();
+
+        /**         维护接口    (Update)        **/
         /// @brief 底盘的周期维护函数，200Hz调用一次（被耦合在RobotSystem中）
         void Update();
 
+        /**         直接接口    (Direct)        **/
+        void Config();
+        void Enable();
+        void Disable(); 
         /// @brief 直接设置底盘速度（一个通用的开环行为）
         void Move(Vec3 Spd);
         void Move(Vec2 Spd);
         void Rotate(float omega);
         
+        /**         抛出接口    (Launch)        **/
         /// @brief 相对当前位置移动
         BaseAction* MoveLocal(Vec2 Pos);
-        
         /// @brief 移动到 指定位置
         BaseAction* MoveAt(Vec2 Pos);
         BaseAction* MoveAt(Vec2 Pos, float MaxVelo, float MaxAccel);
-        
         /// @brief 沿路径移动
         BaseAction* MoveAlong(Path path_t);
 };

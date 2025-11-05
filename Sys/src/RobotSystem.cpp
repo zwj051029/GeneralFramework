@@ -14,7 +14,7 @@ void RobotSystem::Init(bool Sc)
     DWT_Init(CPU_HERT_A_BOARD_MHZ);
     
     // 初始化底盘
-    Chassis.Init();
+    Chassis.Build();
 }
 
 

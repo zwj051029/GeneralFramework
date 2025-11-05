@@ -8,7 +8,7 @@
 // 唯一全局实例
 ChassisClass Chassis;
 
-void ChassisClass::Init()
+void ChassisClass::Build()
 {
     // 初始化电机
     MotorDji motors[4] = {MotorDji(), MotorDji(), MotorDji(), MotorDji()};
