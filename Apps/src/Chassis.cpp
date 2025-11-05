@@ -11,11 +11,10 @@ ChassisClass Chassis;
 void ChassisClass::Build()
 {
     // 初始化电机
-    MotorDji motors[4] = {MotorDji(), MotorDji(), MotorDji(), MotorDji()};
-
     for (int i = 0; i < 4; i++)
     {
         motors[i].Init(&hcan1, i + 1, MotorDJIMode::Speed_Control, true);
+        motors[i].Enable();
     }
 }
 
@@ -36,15 +35,15 @@ void ChassisClass::Update()
     if (enabled)
     {
         // 计算x, y, w合成分量
-        motor_spd[0] = (speed.x - speed.y)  / (2 * BSP_SQRT2) - speed.z * ROTATE_RADIUS;
-        motor_spd[1] = (-speed.x - speed.y) / (2 * BSP_SQRT2) + speed.z * ROTATE_RADIUS;
-        motor_spd[2] = (speed.x + speed.y)  / (2 * BSP_SQRT2) - speed.z * ROTATE_RADIUS;
-        motor_spd[3] = (-speed.x + speed.y) / (2 * BSP_SQRT2) + speed.z * ROTATE_RADIUS;
+        motor_spd[0] = (speed.x - speed.y)  / (BSP_SQRT2) - speed.z * ROTATE_RADIUS;
+        motor_spd[1] = (-speed.x - speed.y) / (BSP_SQRT2) + speed.z * ROTATE_RADIUS;
+        motor_spd[2] = (speed.x + speed.y)  / (BSP_SQRT2) - speed.z * ROTATE_RADIUS;
+        motor_spd[3] = (-speed.x + speed.y) / (BSP_SQRT2) + speed.z * ROTATE_RADIUS;
 
         // 发送速度指令到电机
         for (int i = 0; i < 4; i++)
         {
-            motors[i].SetSpeed(motor_spd[i] * 60.0f / (PI * WHEEL_DIAMETER));
+            motors[i].SetSpeed((motor_spd[i] * 60.0f) / (PI * WHEEL_DIAMETER));
         }
     }
     else

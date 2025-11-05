@@ -7,7 +7,7 @@
 #include "motor_dji.hpp"
 
 #define ROTATE_RADIUS 0.29185f
-#define WHEEL_DIAMETER 0.16f
+#define WHEEL_DIAMETER 0.154f
 
 class MoveAct;
 class ChassisClass;
