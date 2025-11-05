@@ -24,6 +24,12 @@ void ChassisClass::Enable()
     enabled = true;
 }
 
+void ChassisClass::Disable()
+{
+    // 停止所有电机
+    enabled = false;
+}
+
 void ChassisClass::Update()
 {
     // 仅当底盘使能时才工作

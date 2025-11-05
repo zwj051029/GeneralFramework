@@ -97,6 +97,7 @@ class ChassisClass
         void Init();
         void Config();
         void Enable();
+        void Disable(); 
         
         /// @brief 底盘的周期维护函数，200Hz调用一次（被耦合在RobotSystem中）
         void Update();
