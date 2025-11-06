@@ -4,7 +4,9 @@
 static float GetFreq(struct BspTIMPWM_t pwm_inst)
 {
     // 计算PWM频率 = 定时器时钟频率 / (ARR + 1)
-    uint32_t timer_clock_freq = HAL_RCC_GetPCLK1Freq(); // 假设使用APB1时钟作为定时器时钟
+    // 假设使用APB1TimerClock作为定时器时钟（考虑分频）
+    uint32_t timer_clock_freq = HAL_RCC_GetPCLK1Freq() * 2 / (pwm_inst.htim->Instance->PSC + 1);   
+
     float pwm_freq = (float)timer_clock_freq / (pwm_inst.auto_reload_value + 1);
     return pwm_freq;
 }
@@ -22,7 +24,7 @@ void BspTIMPWM_InstRegist(BspTIMPWM_TypeDef *tim_inst, TIM_HandleTypeDef *htim, 
     // 给函数指针赋值
     tim_inst->GetFreq = GetFreq;
 
-
+    tim_inst->freq = tim_inst->GetFreq(*tim_inst);
     // 设置初始占空比为 0
     BspTIMPWM_SetDuty(tim_inst, 0.0f);
 }

@@ -6,11 +6,13 @@ extern "C"
 #endif
 
 #include "stm32f4xx_hal.h"
+#include "tim.h"
 
 typedef struct BspTIMPWM_t
 {
     TIM_HandleTypeDef *htim;        // PWM定时器句柄
     uint32_t channel;               // PWM通道
+    float freq;                     // PWM频率
     uint8_t enabled;                // PWM使能标志
 
     uint32_t auto_reload_value;     // 自动重装载寄存器的值（ARR）
