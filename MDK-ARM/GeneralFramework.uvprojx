@@ -853,6 +853,11 @@
               <FileType>8</FileType>
               <FilePath>..\Libs\src\pids.cpp</FilePath>
             </File>
+            <File>
+              <FileName>bsp_tim_pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Libs\src\bsp_tim_pwm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
