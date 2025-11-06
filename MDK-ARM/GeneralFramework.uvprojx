@@ -923,6 +923,11 @@
               <FileType>8</FileType>
               <FilePath>..\Mods\src\msg_coder.cpp</FilePath>
             </File>
+            <File>
+              <FileName>servo.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\Mods\src\servo.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

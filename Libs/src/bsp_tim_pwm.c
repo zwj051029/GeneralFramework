@@ -1,5 +1,15 @@
 #include "bsp_tim_pwm.h"
 
+
+static float GetFreq(struct BspTIMPWM_t pwm_inst)
+{
+    // 计算PWM频率 = 定时器时钟频率 / (ARR + 1)
+    uint32_t timer_clock_freq = HAL_RCC_GetPCLK1Freq(); // 假设使用APB1时钟作为定时器时钟
+    float pwm_freq = (float)timer_clock_freq / (pwm_inst.auto_reload_value + 1);
+    return pwm_freq;
+}
+
+
 void BspTIMPWM_InstRegist(BspTIMPWM_TypeDef *tim_inst, TIM_HandleTypeDef *htim, uint32_t channel)
 {
     tim_inst->htim = htim;
@@ -9,6 +19,9 @@ void BspTIMPWM_InstRegist(BspTIMPWM_TypeDef *tim_inst, TIM_HandleTypeDef *htim, 
     tim_inst->auto_reload_value = __HAL_TIM_GET_AUTORELOAD(tim_inst->htim);
     // 获取CCR的值
     tim_inst->compare_value = __HAL_TIM_GET_COMPARE(tim_inst->htim, tim_inst->channel);
+    // 给函数指针赋值
+    tim_inst->GetFreq = GetFreq;
+
 
     // 设置初始占空比为 0
     BspTIMPWM_SetDuty(tim_inst, 0.0f);
@@ -34,4 +47,8 @@ void BspTIMPWM_Enable(BspTIMPWM_TypeDef *tim_inst)
     tim_inst->enabled = 1;
 }
 
-
+void BspTIMPWM_Disable(BspTIMPWM_TypeDef *tim_inst)
+{
+    HAL_TIM_PWM_Stop(tim_inst->htim, tim_inst->channel);
+    tim_inst->enabled = 0;
+}
