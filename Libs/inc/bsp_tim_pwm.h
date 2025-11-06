@@ -1,9 +1,25 @@
 #ifndef BSP_TIM_PWM_H
 #define BSP_TIM_PWM_H
 
+#include "stm32f4xx_hal.h"
+
+typedef struct
+{
+    TIM_HandleTypeDef *htim;        // PWM定时器句柄
+    uint32_t channel;               // PWM通道
+    uint8_t enabled;                // PWM使能标志
+
+    uint32_t auto_reload_value;     // 自动重装载寄存器的值（ARR）
+    uint32_t compare_value;         // 比较寄存器的值（CCR）
+
+    float duty;                     // PWM占空比
+    float (*GetFreq)();             // 获取PWM频率的函数指针    
+}BspTIMPWM_TypeDef;
 
 
+void BspTIMPWM_InstRegist(BspTIMPWM_TypeDef *tim_inst, TIM_HandleTypeDef *htim, uint32_t channel);
 
+void BspTIMPWM_SetDuty(BspTIMPWM_TypeDef *tim_inst, float duty);
 
 
 #endif
