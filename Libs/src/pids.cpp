@@ -164,7 +164,6 @@ float PidGeneral::CalcPos(float targ, float real, float output_lim)
 {
     float pid_output;
     error = targ - real;
-    if (dwt_dt == 0) dwt_dt = DWT_GetDeltaTime(&dwt_dt); // 初始化dwt句柄
 
     // 自适应时间间隔
     if (AutoDt) delta_t = DWT_GetDeltaTime(&dwt_dt); // 单位为秒
@@ -211,7 +210,6 @@ float PidGeneral::CalcPos(float targ, float real, float output_lim)
 float PidGeneral::CalcInc(float targ, float real, float output_lim)
 {
     error = targ - real;
-    if (dwt_dt == 0) dwt_dt = DWT_GetDeltaTime(&dwt_dt); // 初始化dwt句柄
 
     // 自适应时间间隔
     if (AutoDt) delta_t = DWT_GetDeltaTime(&dwt_dt); // 单位为秒
@@ -247,7 +245,6 @@ float PidGeneral::CalcInc(float targ, float real, float output_lim)
 float PidGeneral::CalcIncAuto(float targ, float real, float output_lim)
 {
     error = targ - real;
-    if (dwt_dt == 0) dwt_dt = DWT_GetDeltaTime(&dwt_dt); // 初始化dwt句柄
     
     // 自适应时间间隔
     if (AutoDt) delta_t = DWT_GetDeltaTime(&dwt_dt); // 单位为秒
