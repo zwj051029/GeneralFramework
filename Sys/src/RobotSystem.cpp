@@ -24,7 +24,7 @@ void RobotSystem::Init(bool Sc)
 void RobotSystem::Run()
 {
     // 运行目标状态机
-    Automatic_Core.Run();
+    auto_core.Run();
 
     // 管理 主灯带 状态
     
