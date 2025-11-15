@@ -35,9 +35,7 @@
 *.log
 *.tmp
 *.lnp
-MDK-ARM/.vscode/c_cpp_properties.json
-MDK-ARM/.vscode/uv4.log.lock
+MDK-ARM/.vscode/
 build/
 .cache/
-
 .vscode/
