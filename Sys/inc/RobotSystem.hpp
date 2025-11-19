@@ -8,6 +8,7 @@
 #include "motor_dm.hpp"
 #include "bsp_dwt.h"
 #include "StateCore.hpp"
+#include "msg_coder.hpp"
 #include "arm_math.h"
 #include "std_math.hpp"
 #include "cstdarg"
@@ -26,25 +27,9 @@ class Positioner
 
 
 /**
- * @brief 用于监控机器人的各项状态，还有调试、日志等功能
+ * @brief 机器人系统
+ * @warning 本类也属于：单例
  */
-class Monitor
-{
-private:
-    /* data */
-public:
-    Monitor(/* args */){};
-    ~Monitor(){};
-
-    void Log(const char* format, ...);
-    void LogWarning(const char* format, ...);
-    void LogError(const char* format, ...);
-
-    void Track(bool& targ_status);
-};
-
-
-
 class RobotSystem
 {   
     private:
